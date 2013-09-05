@@ -20,13 +20,13 @@ class Ofx
 
         foreach ($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->STMTTRN as $transaction) {
             $transactions[] = array(
-                'type' => (string)$transaction->TRNTYPE,
+                'type' => (string) $transaction->TRNTYPE,
                 'date' => DateTime::createFromFormat("YmdHis", substr($transaction->DTPOSTED, 0, 14)),
-                'amount' => (float)$transaction->TRNAMT,
-                'fit_id' => (string)$transaction->FITID,
-                'check_number' => (string)$transaction->CHECKNUM,
-                'ref_number' => (string)$transaction->REFNUM,
-                'memo' => (string)$transaction->MEMO,
+                'amount' => (float) $transaction->TRNAMT,
+                'fit_id' => (string) $transaction->FITID,
+                'check_number' => (string) $transaction->CHECKNUM,
+                'ref_number' => (string) $transaction->REFNUM,
+                'memo' => (string) $transaction->MEMO,
             );
         }
 

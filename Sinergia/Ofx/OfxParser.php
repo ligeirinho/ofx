@@ -54,7 +54,10 @@ class OfxParser
      */
     protected static function fixBody($body)
     {
-        return preg_replace("!^<([^>]+)>([^<>]+)$!m", '<$1>$2</$1>', $body);
+        // m modifier does not match \r, so remove all of them
+        $body = preg_replace("!\r!", "", $body);
+        // add closing tag just when needed: <CODE>0 but not <STATUS> or when already has: <CODE>0</CODE>
+        return preg_replace("!^<([^/>]+)>([^<>]+)$!m", '<$1>$2</$1>', $body);
     }
 
     protected static function bodyAsXml($body)
