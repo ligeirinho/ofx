@@ -1,0 +1,35 @@
+{
+    "name": "sinergia/ofx",
+    "version": "0.1.0-alpha",
+    "description": "Sinergia OFX (Open Financial Exchange) Parser",
+    "license": "MIT",
+    "type": "library",
+    "keywords": ["sinergia", "ofx"],
+    "minimum-stability": "dev",
+    "bin": ["bin/ofx"],
+
+    "authors": [
+        {
+            "name": "Marcos Neves",
+            "email": "marcos.neves@gmail.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-0": {
+            "Sinergia\\Ofx\\": ""
+        }
+    },
+
+    "require": {
+        "php": ">=5.3.7"
+    },
+
+    "config": {
+        "preferred-install": "dist"
+    },
+
+    "scripts": {
+        "post-install-cmd": ["[[ -f phpunit.phar ]] || wget http://pear.phpunit.de/get/phpunit.phar", "chmod +x phpunit.phar"]
+    }
+}
