@@ -1,0 +1,70 @@
+OFXHEADER:100
+DATA:OFXSGML
+VERSION:102
+SECURITY:NONE
+ENCODING:USASCII
+CHARSET:1252
+COMPRESSION:NONE
+OLDFILEUID:NONE
+NEWFILEUID:NONE
+
+<OFX>
+   <SIGNONMSGSRSV1>
+      <SONRS>
+         <STATUS>
+            <CODE>0</CODE>
+            <SEVERITY>INFO</SEVERITY>
+         </STATUS>
+         <DTSERVER>20130828120000[-3:BRT]</DTSERVER>
+         <LANGUAGE>POR</LANGUAGE>
+         <FI>
+            <ORG>Banco do Brasil</ORG>
+            <FID>1</FID>
+         </FI>
+      </SONRS>
+   </SIGNONMSGSRSV1>
+   <BANKMSGSRSV1>
+      <STMTTRNRS>
+         <TRNUID>1</TRNUID>
+         <STATUS>
+            <CODE>0</CODE>
+            <SEVERITY>INFO</SEVERITY>
+         </STATUS>
+         <STMTRS>
+            <CURDEF>BRL</CURDEF>
+            <BANKACCTFROM>
+               <BANKID>1</BANKID>
+               <BRANCHID>1187-8</BRANCHID>
+               <ACCTID>17933-7</ACCTID>
+               <ACCTTYPE>CHECKING</ACCTTYPE>
+            </BANKACCTFROM>
+            <BANKTRANLIST>
+               <DTSTART>20130625120000[-3:BRT]</DTSTART>
+               <DTEND>20130731120000[-3:BRT]</DTEND>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20130710120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-11.00</TRNAMT>
+                  <FITID>20130710111000</FITID>
+                  <CHECKNUM>911000756229</CHECKNUM>
+                  <REFNUM>891.911.000.756.229</REFNUM>
+                  <MEMO>Tarifa Pacote de Serviços - Tarifa referente a 10/07/2013</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20130715120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-133.70</TRNAMT>
+                  <FITID>201307151133700</FITID>
+                  <CHECKNUM>000000137758</CHECKNUM>
+                  <REFNUM>137.758</REFNUM>
+                  <MEMO>Compra com Cartão - 13/07 10:29  PALMARES</MEMO>
+               </STMTTRN>
+            </BANKTRANLIST>
+            <LEDGERBAL>
+               <BALAMT>5875.17</BALAMT>
+               <DTASOF>20130731120000[-3:BRT]</DTASOF>
+            </LEDGERBAL>
+         </STMTRS>
+      </STMTTRNRS>
+   </BANKMSGSRSV1>
+</OFX>
