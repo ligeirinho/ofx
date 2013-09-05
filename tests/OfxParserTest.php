@@ -84,14 +84,27 @@ S;
 <STATUS>
 <CODE>0
 <SEVERITY>INFO
+</STATUS>
+
 S;
         $expected = <<<S
 <STATUS>
 <CODE>0</CODE>
 <SEVERITY>INFO</SEVERITY>
+</STATUS>
+
 S;
         $fixed = $this->parser->fixBody($body);
         $this->assertEquals($expected, $fixed);
+    }
+
+    public function testFixBodyCRLF()
+    {
+        $body = "<STATUS>\r\n<CODE>0\r\n<SEVERITY>INFO\r\n</STATUS>\r\n";
+        $expc = "<STATUS>\n<CODE>0</CODE>\n<SEVERITY>INFO</SEVERITY>\n</STATUS>\n";
+
+        $fixed = $this->parser->fixBody($body);
+        $this->assertEquals($expc, $fixed);
     }
 
     public function testBodyAsXml()
