@@ -25,6 +25,10 @@
         "php": ">=5.3.7"
     },
 
+    "require-dev": {
+        "sinergia/spl": "dev-master"
+    },
+
     "config": {
         "preferred-install": "dist"
     },

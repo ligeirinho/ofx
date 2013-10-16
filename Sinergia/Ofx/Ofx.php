@@ -21,7 +21,8 @@ class Ofx
         foreach ($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->STMTTRN as $transaction) {
             $transactions[] = array(
                 'type' => (string) $transaction->TRNTYPE,
-                'date' => DateTime::createFromFormat("YmdHis", substr($transaction->DTPOSTED, 0, 14)),
+                //'date' => DateTime::createFromFormat("YmdHis", substr($transaction->DTPOSTED, 0, 14)),
+                'date' => substr($transaction->DTPOSTED, 0, 8), // Ymd
                 'amount' => (float) $transaction->TRNAMT,
                 'fit_id' => (string) $transaction->FITID,
                 'check_number' => (string) $transaction->CHECKNUM,

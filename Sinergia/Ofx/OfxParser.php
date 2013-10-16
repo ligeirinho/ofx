@@ -2,6 +2,12 @@
 
 namespace Sinergia\Ofx;
 
+/**
+ * Convert Ofx string to XML
+ *
+ * Class OfxParser
+ * @package Sinergia\Ofx
+ */
 class OfxParser
 {
     public static function parse($str)
