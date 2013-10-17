@@ -2,16 +2,47 @@
 
 namespace Sinergia\Ofx;
 
-use DateTime;
-
 class Ofx
 {
-    public $headers;
-    public $xml;
+    protected $headers;
+    protected $xml;
+    protected $bank = array();
 
     public function __construct($file)
     {
         list($this->headers, $this->xml) = OfxParser::parse($file);
+
+        $bank = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKACCTFROM;
+        $this->bank = array(
+            'id' => (string) $bank->BANKID,
+            'branch' => (string) $bank->BRANCHID,
+            'account' => (string) $bank->ACCTID
+        );
+    }
+
+    public function getServerDate()
+    {
+        return (string) $this->xml->BANKMSGSRSV1->SONRS->DTSERVER;
+    }
+
+    public function getBank()
+    {
+        return $this->bank;
+    }
+
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    public function getDateStart()
+    {
+        return substr($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->DTSTART, 0, 8);
+    }
+
+    public function getDateEnd()
+    {
+        return substr($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->DTEND, 0, 8);
     }
 
     public function getTransactions()
@@ -19,16 +50,18 @@ class Ofx
         $transactions = array();
 
         foreach ($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->STMTTRN as $transaction) {
-            $transactions[] = array(
+            $trans = array(
                 'type' => (string) $transaction->TRNTYPE,
-                //'date' => DateTime::createFromFormat("YmdHis", substr($transaction->DTPOSTED, 0, 14)),
-                'date' => substr($transaction->DTPOSTED, 0, 8), // Ymd
+                'date' => substr($transaction->DTPOSTED, 0, 8),
                 'amount' => (float) $transaction->TRNAMT,
                 'fit_id' => (string) $transaction->FITID,
                 'check_number' => (string) $transaction->CHECKNUM,
                 'ref_number' => (string) $transaction->REFNUM,
                 'memo' => (string) $transaction->MEMO,
             );
+            $id = implode("\t", array_merge($this->bank, $trans));
+            $trans['id'] = sha1($id);
+            $transactions[] = $trans;
         }
 
         return $transactions;

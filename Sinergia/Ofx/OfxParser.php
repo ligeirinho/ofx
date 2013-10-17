@@ -68,6 +68,29 @@ class OfxParser
 
     protected static function bodyAsXml($body)
     {
-        return simplexml_load_string($body);
+        if ( mb_detect_encoding($body) == 'UTF-8' ) {
+            $body = utf8_encode($body);
+        }
+
+        libxml_use_internal_errors(true);
+        $sxml = simplexml_load_string($body);
+        if ($sxml === false) {
+            static::handleXmlErrors($body);
+        }
+        libxml_use_internal_errors(false);
+
+        return $sxml;
+    }
+
+    protected static function handleXmlErrors($body)
+    {
+        $errors = array();
+        foreach (libxml_get_errors() as $error) {
+            $error->file = $body;
+            $errors[] = $error;
+        }
+        libxml_clear_errors();
+        libxml_use_internal_errors(false);
+        throw new \RuntimeException($errors[0]->message, $errors[0]->code);
     }
 }
