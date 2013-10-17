@@ -51,16 +51,20 @@ class Ofx
 
         foreach ($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->STMTTRN as $transaction) {
             $trans = array(
-                'type' => (string) $transaction->TRNTYPE,
+                'type' => trim($transaction->TRNTYPE),
                 'date' => substr($transaction->DTPOSTED, 0, 8),
                 'amount' => (float) $transaction->TRNAMT,
-                'fit_id' => (string) $transaction->FITID,
-                'check_number' => (string) $transaction->CHECKNUM,
-                'ref_number' => (string) $transaction->REFNUM,
-                'memo' => (string) $transaction->MEMO,
+                'fit_id' => trim($transaction->FITID),
+                'check_number' => trim($transaction->CHECKNUM),
+                'ref_number' => trim($transaction->REFNUM),
+                'memo' => trim($transaction->MEMO),
             );
+
+            // ignore amount zero
+            if ($trans['amount'] == 0) continue;
+
             $id = implode("\t", array_merge($this->bank, $trans));
-            $trans['id'] = sha1($id);
+            $trans['id'] = md5($id);
             $transactions[] = $trans;
         }
 
