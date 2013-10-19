@@ -64,7 +64,8 @@ class Ofx
             if ($trans['amount'] == 0) continue;
 
             $id = implode("\t", array_merge($this->bank, $trans));
-            $trans['id'] = sha1($id);
+            $id = sha1($id);
+            $trans['id'] = $id;
             $transactions[] = $trans;
         }
 
