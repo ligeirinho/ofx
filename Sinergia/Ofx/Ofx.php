@@ -54,7 +54,7 @@ class Ofx
                 'type' => trim($transaction->TRNTYPE),
                 'date' => substr($transaction->DTPOSTED, 0, 8),
                 'amount' => (float) $transaction->TRNAMT,
-                'fit_id' => trim($transaction->FITID),
+                'fitid' => trim($transaction->FITID),
                 'check_number' => trim($transaction->CHECKNUM),
                 'ref_number' => trim($transaction->REFNUM),
                 'memo' => trim($transaction->MEMO),
