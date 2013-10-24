@@ -2,9 +2,12 @@
 
 namespace Sinergia\Ofx;
 
-use Traversable;
+use Traversable,
+    IteratorAggregate,
+    Countable,
+    ArrayIterator;
 
-class Ofx implements \IteratorAggregate, \Countable
+class Ofx implements IteratorAggregate, Countable
 {
     protected $headers;
     protected $xml;
@@ -83,7 +86,7 @@ class Ofx implements \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
-        return $this->getTransactions();
+        return new ArrayIterator($this->getTransactions());
     }
 
     /**
