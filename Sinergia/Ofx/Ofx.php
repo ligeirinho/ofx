@@ -4,7 +4,7 @@ namespace Sinergia\Ofx;
 
 use Traversable;
 
-class Ofx implements \IteratorAggregate
+class Ofx implements \IteratorAggregate, \Countable
 {
     protected $headers;
     protected $xml;
@@ -84,6 +84,20 @@ class Ofx implements \IteratorAggregate
     public function getIterator()
     {
         return $this->getTransactions();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     */
+    public function count()
+    {
+        return count($this->getTransactions());
     }
 }
 
