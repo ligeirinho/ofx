@@ -66,7 +66,7 @@ class Ofx
             $id = implode("\t", array_merge($this->bank, $trans));
             $id = sha1($id);
             $trans['id'] = $id;
-            $transactions[] = $trans;
+            $transactions[$id] = $trans;
         }
 
         return $transactions;
