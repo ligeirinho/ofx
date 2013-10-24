@@ -19,7 +19,7 @@ class Ofx implements IteratorAggregate, Countable
 
         $bank = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKACCTFROM;
         $this->bank = array(
-            'id' => (string) $bank->BANKID,
+            'bank' => (string) $bank->BANKID,
             'branch' => (string) $bank->BRANCHID,
             'account' => (string) $bank->ACCTID
         );
@@ -55,7 +55,8 @@ class Ofx implements IteratorAggregate, Countable
         $transactions = array();
 
         foreach ($this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKTRANLIST->STMTTRN as $transaction) {
-            $trans = array(
+            $trans = $this->bank;
+            $trans = array_merge($trans, array(
                 'type' => trim($transaction->TRNTYPE),
                 'date' => substr($transaction->DTPOSTED, 0, 8),
                 'amount' => (float) $transaction->TRNAMT,
@@ -63,15 +64,19 @@ class Ofx implements IteratorAggregate, Countable
                 'check_number' => trim($transaction->CHECKNUM),
                 'ref_number' => trim($transaction->REFNUM),
                 'memo' => trim($transaction->MEMO),
-            );
+            ));
 
             // ignore amount zero
             if ($trans['amount'] == 0) continue;
+
+            // normalize type to CREDIT or DEBIT only
             $trans['type'] = $trans['amount'] > 0 ? 'CREDIT' : 'DEBIT';
 
-            $id = implode("\t", array_merge($this->bank, $trans));
+            // build id based on all fields
+            $id = implode("\t", $trans);
             $id = sha1($id);
             $trans['id'] = $id;
+
             $transactions[$id] = $trans;
         }
 
