@@ -67,6 +67,7 @@ class Ofx implements IteratorAggregate, Countable
 
             // ignore amount zero
             if ($trans['amount'] == 0) continue;
+            $trans['type'] = $trans['amount'] > 0 ? 'CREDIT' : 'DEBIT';
 
             $id = implode("\t", array_merge($this->bank, $trans));
             $id = sha1($id);
